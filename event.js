@@ -32,11 +32,13 @@ function showNextTab(isFirstCycle = false) {
 }
 
 function pause() {
+    chrome.browserAction.setIcon({ path: 'img/Play-38.png' });
     clearTimeout(session.timerId);
     session.isPlaying = false;
 }
 
 function play() {
+    chrome.browserAction.setIcon({ path: 'img/Pause-38.png' });
     session = newSessionObject();
     session.isPlaying = true;
     chrome.windows.getCurrent(function(window) {
