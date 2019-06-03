@@ -4,13 +4,13 @@
   "version": "0.1",
   "description": "simple extension",
   "browser_action": {
-    "default_icon": "icon-16.png"
+    "default_icon": "img/Play-38.png"
   },
   "icons": {
-    "16": "icon-16.png",
-    "32": "icon-32.png",
-    "48": "icon-48.png",
-    "128": "icon-128.png"
+    "16": "img/Play-16.png",
+    "32": "img/Play-32.png",
+    "48": "img/Play-48.png",
+    "128": "img/Play-128.png"
   },
   "content_scripts": [{
    "matches": ["<all_urls>"],
