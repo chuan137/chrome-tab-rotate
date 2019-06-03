@@ -1,16 +1,16 @@
 let session = newSessionObject();
+let debug = true;
 
 function newSessionObject() {
     return {
         isPlaying: false,
         windowId: null,
         timerId: null,
-        interval: 5,
+        interval: 3,
     }
 }
 
 function showNextTab(isFirstCycle = false) { 
-
     // break out infinite loop
     if (!session.isPlaying) return;
 
@@ -22,10 +22,12 @@ function showNextTab(isFirstCycle = false) {
                 if (e.highlighted) return true;
             });
             var nextIndex =  t.index + 1 >= tabs.length ? 0 : t.index + 1;
-            console.log("switch to next tab");
-            chrome.tabs.highlight({ 'tabs': nextIndex });
+            if (debug) {
+                console.log("switch to tab " + nextIndex.toString() + " in window " + session.windowId.toString());
+            }
+            chrome.tabs.highlight({windowId: session.windowId, tabs: nextIndex });
         });
-        setTimeout(() => showNextTab(false), session.interval * 1000)
+        setTimeout(showNextTab, session.interval * 1000)
     }, session.interval * 1000);
 }
 
@@ -37,7 +39,9 @@ function pause() {
 function play() {
     session = newSessionObject();
     session.isPlaying = true;
-    session.windowId = chrome.windows.WINDOW_ID_CURRENT;
+    chrome.windows.getCurrent(function(window) {
+        session.windowId = window.id;
+    })
     showNextTab(true)
 }
 
